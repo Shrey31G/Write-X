@@ -1,5 +1,5 @@
 import { PenSquare } from "lucide-react";
-import { Link, useLocation } from "react-router-dom"
+import { Link, useLocation, useNavigate } from "react-router-dom"
 
 interface BlogCardProps {
     authorName: string,
@@ -11,10 +11,13 @@ interface BlogCardProps {
 
 export const PostCard = ({ authorName, title, content, publishedDate, id }: BlogCardProps) => {
     const location = useLocation();
+    const navigate = useNavigate();
     const isProfileRoute = location.pathname.includes(`/profile/${authorName}`)
     const handleEdit = (e: React.MouseEvent) => {
         e.preventDefault();
-        window.location.href = `/update/post/${id}`
+        e.stopPropagation();
+
+        navigate(`/update/post/${id}`)
 
     }
     return (
