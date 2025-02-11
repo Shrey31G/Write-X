@@ -174,6 +174,7 @@ function TextEditor({ value, onChange, error }: { value: string, onChange: (e: C
                             id="editor" rows={16}
                             className="block p-2.5 w-full text-sm text-gray-900 bg-gray-50 rounded-lg border border-gray-300 focus:ring-blue-500 focus:border-blue-500 "
                             placeholder="Write Your Story..." required />
+                            {error && <p className="mt-1 text-sm text-red-500">{error}</p>}
                     </div>
                 </div>
             </div>
