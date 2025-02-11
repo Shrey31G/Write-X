@@ -1,0 +1,11 @@
+name = "backend"
+main = "src/index.ts"
+compatibility_date = "2025-01-19"
+
+# compatibility_flags = [ "nodejs_compat" ]
+
+[vars]
+# prisma database accelerated 
+DATABASE_URL=""
+
+JWT_SECRET = ""
