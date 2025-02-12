@@ -82,7 +82,7 @@ export const Auth = ({ type }: { type: "signup" | "signin" }) => {
                     <LabelledInput
                         label="Password"
                         type="password"
-                        placeholder="Enter your password"
+                        placeholder="Enter 8-digit password"
                         onChange={(e) => setPostInputs(c => ({...c, password: e.target.value}))}
                         onFocus={(e) => scrollToInput(e.target)}
                     />

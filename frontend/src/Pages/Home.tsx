@@ -3,7 +3,7 @@ import { AllPostSkeleton } from "../components/Skeleton/AllPostSkeleton";
 import { PostCard } from "../components/PostCard";
 
 import { Navbar } from "../components/Navbar";
-import { SideBar } from "../components/SideBar.tsx/SideBar";
+import { SideBar } from "../components/Sidebar/SideBar";
 import { FileText } from "lucide-react";
 
 export const Home = () => {

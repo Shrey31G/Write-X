@@ -5,7 +5,7 @@ import { PostCard } from "../components/PostCard";
 import { BACKEND_URL } from "../config";
 import axios from "axios";
 import { Navbar } from "../components/Navbar";
-import { SideBar } from "../components/SideBar.tsx/SideBar";
+import { SideBar } from "../components/Sidebar/SideBar";
 
 import { FileText } from "lucide-react";
 

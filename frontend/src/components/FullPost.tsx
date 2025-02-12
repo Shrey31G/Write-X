@@ -2,7 +2,7 @@ import { Link } from "react-router-dom";
 import { Post } from "../hooks"
 import { Avatar } from "./PostCard";
 import { Navbar } from "./Navbar";
-import { SideBar } from "./SideBar.tsx/SideBar";
+import { SideBar } from "./Sidebar/SideBar";
 import { FullPostSkeleton } from "./Skeleton/FullPostSkeleton";
 
 
