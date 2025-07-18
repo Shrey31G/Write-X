@@ -16,7 +16,7 @@ type Post = {
         username: string
     }
 }
-    
+
 export const Profile = () => {
     const { identifier } = useParams();
     const [posts, setPosts] = useState<Post[]>([]);
