@@ -19,9 +19,9 @@ export const FullPost = ({ post, loading }: { post?: Post, loading: boolean }) =
                 <div className="w-full md:w-[70%] min-h-screen mx-auto px-4 rounded-xl pb-24 md:pb-4 pt-[5rem] relative z-10">
 
                     <div className="grid grid-cols-1 md:grid-cols-12 mx-auto">
-                    <div className="md:h-full md:col-span-3 w-full md:flex md:justify-center relative z-10   md:overflow-auto" >
-                        <SideBar />
-                    </div>
+                        <div className="md:h-full md:col-span-3 w-full md:flex md:justify-center relative z-10   md:overflow-auto" >
+                            <SideBar />
+                        </div>
                         <div className="col-span-1 md:col-span-9 relative md:pl-12">
                             <FullPostSkeleton />
                         </div>
