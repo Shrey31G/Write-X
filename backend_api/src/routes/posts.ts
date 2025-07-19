@@ -117,6 +117,57 @@ postRouter.put("/:id", async (c) => {
     })
 })
 
+// Route to delete your post
+postRouter.delete('/:id', async (c) => {
+    const postId = c.req.param("id");
+    const userId = c.get("userId");
+
+    const prisma = new PrismaClient({
+        datasourceUrl: c.env.DATABASE_URL
+    }).$extends(withAccelerate());
+
+    try {
+        const existingPost = await prisma.post.findUnique({
+            where: {
+                id: postId
+            },
+            select: {
+                id: true,
+                authorId: true
+            }
+        });
+
+        if (!existingPost) {
+            c.status(404);
+            return c.json({
+                message: "Post not found"
+            });
+        }
+
+        if (existingPost.authorId !== userId) {
+            c.status(403);
+            return c.json({
+                message: "You are not authorized to delete this post"
+            });
+        }
+
+        await prisma.post.delete({
+            where: {
+                id: postId
+            }
+        });
+
+        return c.json({ message: 'Post deleted successfully' })
+    } catch (error) {
+        console.error('Delete error:', error);
+        c.status(500);
+        return c.json({
+            error: 'Failed to delete post',
+            details: error instanceof Error ? error.message : 'Unknown error'
+        });
+    }
+})
+
 // Public route to get all post
 
 postRouter.get("/feed", async (c) => {
@@ -254,55 +305,7 @@ postRouter.get("/:identifier/posts", async (c) => {
     }
 })
 
-postRouter.delete('/:id', async (c) => {
-    const postId = c.req.param("id");
-    const userId = c.get("userId");
 
-    const prisma = new PrismaClient({
-        datasourceUrl: c.env.DATABASE_URL
-    }).$extends(withAccelerate());
-
-    try {
-        const existingPost = await prisma.post.findUnique({
-            where: {
-                id: postId
-            },
-            select: {
-                id: true,
-                authorId: true
-            }
-        });
-
-        if (!existingPost) {
-            c.status(404);
-            return c.json({
-                message: "Post not found"
-            });
-        }
-
-        if (existingPost.authorId !== userId) {
-            c.status(403);
-            return c.json({
-                message: "You are not authorized to delete this post"
-            });
-        }
-
-        await prisma.post.delete({
-            where: {
-                id: postId
-            }
-        });
-
-        return c.json({ message: 'Post deleted successfully' })
-    } catch (error) {
-        console.error('Delete error:', error);
-        c.status(500);
-        return c.json({
-            error: 'Failed to delete post',
-            details: error instanceof Error ? error.message : 'Unknown error'
-        });
-    }
-})
 
 
 

@@ -35,8 +35,7 @@ export const PostCard = ({ authorName, title, content, publishedDate, id }: Blog
             await axios.delete(`${BACKEND_URL}api/v1/posts/${id}`, {
                 headers: {
                     Authorization: localStorage.getItem("token"),
-                },
-                data: {}
+                }
             });
             alert('Post deleted');
             setShowDeleteConfirmation(false);
