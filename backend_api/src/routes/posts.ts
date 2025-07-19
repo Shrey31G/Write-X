@@ -37,7 +37,6 @@ postRouter.use("/*", async (c, next) => {
 })
 
 // Route for user to POST a post.
-
 postRouter.post('/', async (c) => {
     const body = await c.req.json();
     const { success } = createPostInput.safeParse(body);
@@ -64,8 +63,92 @@ postRouter.post('/', async (c) => {
     })
 })
 
-// Route to update a specific user's own post
+// Route to delete your post (moved before /:id route)
+postRouter.delete('/:id', async (c) => {
+    const postId = c.req.param("id");
+    const userId = c.get("userId");
 
+    const prisma = new PrismaClient({
+        datasourceUrl: c.env.DATABASE_URL
+    }).$extends(withAccelerate());
+
+    try {
+        const existingPost = await prisma.post.findUnique({
+            where: {
+                id: postId
+            },
+            select: {
+                id: true,
+                authorId: true
+            }
+        });
+
+        if (!existingPost) {
+            c.status(404);
+            return c.json({
+                message: "Post not found"
+            });
+        }
+
+        if (existingPost.authorId !== userId) {
+            c.status(403);
+            return c.json({
+                message: "You are not authorized to delete this post"
+            });
+        }
+
+        await prisma.post.delete({
+            where: {
+                id: postId
+            }
+        });
+
+        return c.json({ message: 'Post deleted successfully' })
+    } catch (error) {
+        console.error('Delete error:', error);
+        c.status(500);
+        return c.json({
+            error: 'Failed to delete post',
+            details: error instanceof Error ? error.message : 'Unknown error'
+        });
+    }
+})
+
+// Public route to get all post (moved before specific routes)
+postRouter.get("/feed", async (c) => {
+    const prisma = new PrismaClient({
+        datasourceUrl: c.env.DATABASE_URL
+    }).$extends(withAccelerate())
+
+    try {
+        const postAll = await prisma.post.findMany({
+            select: {
+                id: true,
+                title: true,
+                content: true,
+                author: {
+                    select: {
+                        name: true,
+                        username: true
+                    }
+                }
+            },
+            orderBy: {
+                id: 'desc'
+            }
+        })
+        return c.json({
+            postAll
+        })
+    } catch (error) {
+        c.status(411);
+        return c.json({
+            message: "Problem in fetchin posts"
+        })
+    }
+})
+
+// Route to update a specific user's own post
 postRouter.put("/:id", async (c) => {
     const postId = c.req.param("id")
     const body = await c.req.json();
@@ -117,139 +200,10 @@ postRouter.put("/:id", async (c) => {
     })
 })
 
-// Route to delete your post
-postRouter.delete('/:id', async (c) => {
-    const postId = c.req.param("id");
-    const userId = c.get("userId");
 
-    const prisma = new PrismaClient({
-        datasourceUrl: c.env.DATABASE_URL
-    }).$extends(withAccelerate());
-
-    try {
-        const existingPost = await prisma.post.findUnique({
-            where: {
-                id: postId
-            },
-            select: {
-                id: true,
-                authorId: true
-            }
-        });
-
-        if (!existingPost) {
-            c.status(404);
-            return c.json({
-                message: "Post not found"
-            });
-        }
-
-        if (existingPost.authorId !== userId) {
-            c.status(403);
-            return c.json({
-                message: "You are not authorized to delete this post"
-            });
-        }
-
-        await prisma.post.delete({
-            where: {
-                id: postId
-            }
-        });
-
-        return c.json({ message: 'Post deleted successfully' })
-    } catch (error) {
-        console.error('Delete error:', error);
-        c.status(500);
-        return c.json({
-            error: 'Failed to delete post',
-            details: error instanceof Error ? error.message : 'Unknown error'
-        });
-    }
-})
-
-// Public route to get all post
-
-postRouter.get("/feed", async (c) => {
-    const prisma = new PrismaClient({
-        datasourceUrl: c.env.DATABASE_URL
-    }).$extends(withAccelerate())
-
-    try {
-        const postAll = await prisma.post.findMany({
-            select: {
-                id: true,
-                title: true,
-                content: true,
-                author: {
-                    select: {
-                        name: true,
-                        username: true
-                    }
-                }
-            },
-            orderBy: {
-                id: 'desc'
-            }
-        })
-        return c.json({
-            postAll
-        })
-    } catch (error) {
-        c.status(411);
-        return c.json({
-            message: "Problem in fetchin posts"
-        })
-    }
-})
-
-// Route to get a specific post
-
-postRouter.get("/:id", async (c) => {
-    const id = c.req.param("id");
-    const prisma = new PrismaClient({
-        datasourceUrl: c.env.DATABASE_URL
-    }).$extends(withAccelerate());
-
-    try {
-        const post = await prisma.post.findFirst({
-            where: { id: id },
-            select: {
-                id: true,
-                title: true,
-                content: true,
-
-                author: {
-                    select: {
-                        name: true,
-                        username: true
-                    }
-                }
-            }
-        })
-        if (post) {
-            return c.json({
-                post
-            })
-        } else {
-            c.status(404);
-            return c.json({
-                message: "Post not found"
-            })
-        }
-    } catch (error) {
-        c.status(411);
-        return c.json({
-            message: "Post not found"
-        })
-    }
-})
-
-// Route to get profile specific post for a user
-// <Link to={`/users/${userId}/posts`}>View Posts</Link> for routing in frontend
-
+// Route to get profile specific post for a user (moved before /:id route)
 postRouter.get("/:identifier/posts", async (c) => {
-    const identifier = c.req.param("identifier"); // Get userId from path param
+    const identifier = c.req.param("identifier");
 
     if (!identifier) {
         c.status(400);
@@ -305,8 +259,42 @@ postRouter.get("/:identifier/posts", async (c) => {
     }
 })
 
+// Route to get a specific post (moved to the end since it's most general)
+postRouter.get("/:id", async (c) => {
+    const id = c.req.param("id");
+    const prisma = new PrismaClient({
+        datasourceUrl: c.env.DATABASE_URL
+    }).$extends(withAccelerate());
 
-
-
-
-
+    try {
+        const post = await prisma.post.findFirst({
+            where: { id: id },
+            select: {
+                id: true,
+                title: true,
+                content: true,
+                author: {
+                    select: {
+                        name: true,
+                        username: true
+                    }
+                }
+            }
+        })
+        if (post) {
+            return c.json({
+                post
+            })
+        } else {
+            c.status(404);
+            return c.json({
+                message: "Post not found"
+            })
+        }
+    } catch (error) {
+        c.status(411);
+        return c.json({
+            message: "Post not found"
+        })
+    }
+})

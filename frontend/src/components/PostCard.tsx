@@ -39,7 +39,7 @@ export const PostCard = ({ authorName, title, content, publishedDate, id }: Blog
             console.log('Backend URL:', `${BACKEND_URL}api/v1/posts/delete/${id}`);
             console.log('Token:', localStorage.getItem("token"));
 
-            const response = await axios.delete(`${BACKEND_URL}api/v1/posts/delete/${id}`, {
+            const response = await axios.delete(`${BACKEND_URL}api/v1/posts/${id}`, {
                 headers: {
                     Authorization: localStorage.getItem("token"),
                 }
