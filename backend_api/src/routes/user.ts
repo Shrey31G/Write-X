@@ -15,9 +15,9 @@ userRouter.post('/signup', async (c) => {
     const body = await c.req.json();
     const { success } = signupInput.safeParse(body);
 
-    if(!success) {
+    if (!success) {
         c.status(411);
-        return c.json({message: "Invalid credentials"})
+        return c.json({ message: "Invalid credentials" })
     }
 
     const prisma = new PrismaClient({
@@ -34,7 +34,7 @@ userRouter.post('/signup', async (c) => {
             }
         })
 
-        const token = await sign({id: user.id}, c.env.JWT_SECRET);
+        const token = await sign({ id: user.id }, c.env.JWT_SECRET);
         return c.json({
             jwt: token,
             userId: user.id,
@@ -49,10 +49,10 @@ userRouter.post('/signup', async (c) => {
 userRouter.post("/signin", async (c) => {
     const body = await c.req.json();
     const { success } = signinInput.safeParse(body);
-    
-    if(!success) {
+
+    if (!success) {
         c.status(411);
-        return c.json({message: "Invalid signin credentials"})
+        return c.json({ message: "Invalid signin credentials" })
     }
 
     const prisma = new PrismaClient({
@@ -66,11 +66,11 @@ userRouter.post("/signin", async (c) => {
                 password: body.password
             }
         })
-        if(!user) {
+        if (!user) {
             c.status(403);
             return c.text("Invalid email and password")
         }
-        const token = await sign({id: user.id}, c.env.JWT_SECRET);
+        const token = await sign({ id: user.id }, c.env.JWT_SECRET);
         return c.json({
             jwt: token,
             userId: user.id,
@@ -78,8 +78,38 @@ userRouter.post("/signin", async (c) => {
         })
     } catch (error) {
         c.status(403);
-        return c.json({e: "Wrong Credentials"})
+        return c.json({ e: "Wrong Credentials" })
     }
 })
 
+userRouter.get("/:identifier", async (c) => {
+    const identifier = c.req.param("identifier");
+    const prisma = new PrismaClient({
+        datasourceUrl: c.env.DATABASE_URL,
+    }).$extends(withAccelerate());
 
+    try {
+        const user = await prisma.user.findFirst({
+            where: {
+                OR: [
+                    { id: identifier },
+                    { username: identifier }
+                ]
+            },
+            select: {
+                id: true,
+                name: true,
+                username: true
+            }
+        });
+        if (!user) {
+            c.status(404);
+            return c.json({ message: "User not found" });
+        }
+
+        return c.json({ user });
+    } catch (error) {
+        c.status(500);
+        return c.json({ message: "Error fetching user" });
+    }
+});

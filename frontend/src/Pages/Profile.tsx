@@ -7,6 +7,12 @@ import { AllPostSkeleton } from "../components/Skeleton/AllPostSkeleton"
 import { PostCard } from "../components/PostCard"
 import { HomeIcon, FileText } from "lucide-react"
 
+type User = {
+    id: string,
+    name: string,
+    username: string,
+}
+
 type Post = {
     id: string,
     title: string,
@@ -19,7 +25,10 @@ type Post = {
 
 export const Profile = () => {
     const { identifier } = useParams();
+
     const [posts, setPosts] = useState<Post[]>([]);
+    const [user, setUser] = useState<User | null>(null);
+
     const [loading, setLoading] = useState(true);
     const userName = posts.length > 0 ? posts[0].author.username : "Loading...";
     const name = posts.length > 0 ? posts[0].author.name : "Loading...";
@@ -36,6 +45,9 @@ export const Profile = () => {
                         }
                     }
                 );
+                if (response.data.userPosts.length > 0) {
+                    setUser(response.data.userPosts[0].author);
+                }
                 setPosts(response.data.userPosts);
             } catch (error) {
                 console.error("Error fetching user posts:", error);
@@ -46,9 +58,29 @@ export const Profile = () => {
         fetchPosts();
     }, [identifier]);
 
-    const  handlePostDeleted = (deletedPostId: string) => {
+    const handlePostDeleted = (deletedPostId: string) => {
         setPosts(posts.filter(post => post.id !== deletedPostId));
     };
+
+    useEffect(() => {
+        if (!loading && posts.length === 0 && identifier && !user) {
+            const fetchUser = async () => {
+                try {
+                    const response = await axios.get(`${BACKEND_URL}api/v1/user/${identifier}`,
+                        {
+                            headers: {
+                                Authorization: localStorage.getItem("token")
+                            }
+                        }
+                    );
+                    setUser(response.data.user);
+                } catch (error) {
+                    console.error("Error fetching user", error);
+                }
+            };
+            fetchUser();
+        }
+    }, [loading, posts, identifier, user])
 
     return (
         <div className="min-h-screen bg-gradient-to-b from-gray-900 to-black">
@@ -66,12 +98,12 @@ export const Profile = () => {
                     <div className="bg-gradient-to-r from-black via-gray-900 to-black/20 h-32"></div>
                     <div className="px-8 pb-8 -mt-16">
                         <div className="relative inline-block">
-                            <Avatar size="big" name={userName} />
+                            <Avatar size="big" name={user?.username || "User"} />
                             <div className="absolute bottom-0 right-0 w-4 h-4 bg-green-500 rounded-full border-2 border-white"></div>
                         </div>
                         <div className="mt-4">
-                            <h1 className="text-3xl font-bold text-white">{name}</h1>
-                            <p className="text-blue-400 font-medium">@{userName}</p>
+                            <h1 className="text-3xl font-bold text-white">{user?.name || "User"}</h1>
+                            <p className="text-blue-400 font-medium">@{user?.username || "User"}</p>
                         </div>
                     </div>
                 </div>

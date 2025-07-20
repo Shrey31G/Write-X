@@ -47,7 +47,6 @@ export const PostCard = ({ authorName, title, content, publishedDate, id, onDele
             });
 
             console.log('Delete response:', response);
-            alert('Post deleted successfully');
             if (onDeleteSuccess) {
                 onDeleteSuccess(id);
             }
@@ -60,11 +59,11 @@ export const PostCard = ({ authorName, title, content, publishedDate, id, onDele
             console.error('Error response:', err.response);
 
             if (err.response?.status === 404) {
-                alert('Post not found or already deleted');
+                console.log('Post not found or already deleted');
             } else if (err.response?.status === 403) {
-                alert('You are not authorized to delete this post');
+                console.log('You are not authorized to delete this post');
             } else {
-                alert('Failed to delete post. Please try again.');
+                console.log('Failed to delete post. Please try again.');
             }
         } finally {
             setIsDeleting(false);
