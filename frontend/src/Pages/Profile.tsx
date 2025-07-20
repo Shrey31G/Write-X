@@ -46,6 +46,10 @@ export const Profile = () => {
         fetchPosts();
     }, [identifier]);
 
+    const  handlePostDeleted = (deletedPostId: string) => {
+        setPosts(posts.filter(post => post.id !== deletedPostId));
+    };
+
     return (
         <div className="min-h-screen bg-gradient-to-b from-gray-900 to-black">
             <div className="max-w-6xl mx-auto px-4 py-8">
@@ -94,6 +98,7 @@ export const Profile = () => {
                                     content={post.content}
                                     authorName={post.author.username || "Anonymous"}
                                     publishedDate="Today"
+                                    onDeleteSuccess={handlePostDeleted}
                                 />
                             ))
                         ) : (

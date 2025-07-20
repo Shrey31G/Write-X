@@ -10,9 +10,10 @@ interface BlogCardProps {
     content: string,
     id: string,
     publishedDate: string
+    onDeleteSuccess?: (deletedPostId: string) => void;
 }
 
-export const PostCard = ({ authorName, title, content, publishedDate, id }: BlogCardProps) => {
+export const PostCard = ({ authorName, title, content, publishedDate, id, onDeleteSuccess }: BlogCardProps) => {
     const location = useLocation();
     const navigate = useNavigate();
     const [showDeleteConfirmation, setShowDeleteConfirmation] = useState(false);
@@ -47,9 +48,12 @@ export const PostCard = ({ authorName, title, content, publishedDate, id }: Blog
 
             console.log('Delete response:', response);
             alert('Post deleted successfully');
+            if (onDeleteSuccess) {
+                onDeleteSuccess(id);
+            }
+
             setShowDeleteConfirmation(false);
 
-            window.location.reload();
 
         } catch (err: any) {
             console.error('Delete error:', err);
