@@ -29,15 +29,21 @@ export const Navbar = () => {
 
   const navbarClass = `
     fixed top-0 left-0 w-full flex justify-center transition-all duration-300 z-50 
-    ${visible || atTop ? "translate-y-0 opacity-100" : "-translate-y-full opacity-0"}
+    ${visible || atTop ? "translate-y-0" : "-translate-y-full"}
+    bg-gray-900/80 backdrop-blur-lg border-b border-gray-800
   `;
 
   return (
     <div className={navbarClass}>
-      <div className="w-[70%] flex justify-between items-center px-6 bg-gradient-to-r from-black via-gray-900 to-black py-2 rounded-b-2xl border-b-2 border-gray-800 shadow-lg backdrop-blur-md">
+      <div className="w-full max-w-7xl flex justify-between items-center px-6 py-3">
         <div className="flex-1 flex justify-center md:justify-center font-semibold">
-          <Link to={"/"} className="flex items-center gap-2 text-white/90 hover:text-white transition-all duration-300 px-4 py-3 rounded-full font-semibold shadow-lg hover:shadow-xl hover:-translate-y-0.5 cursor-pointer text-2xl">
-            <span className="text-blue-400">Write</span>X
+          <Link
+            to={"/"}
+            className="flex items-center gap-2 text-white/90 hover:text-white transition-all duration-300 px-4 py-2 rounded-full font-bold text-2xl"
+          >
+            <span className="bg-gradient-to-r from-indigo-400 to-purple-500 bg-clip-text text-transparent">
+              WriteX
+            </span>
           </Link>
         </div>
       </div>
