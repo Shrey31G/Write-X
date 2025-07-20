@@ -30,8 +30,6 @@ export const Profile = () => {
     const [user, setUser] = useState<User | null>(null);
 
     const [loading, setLoading] = useState(true);
-    const userName = posts.length > 0 ? posts[0].author.username : "Loading...";
-    const name = posts.length > 0 ? posts[0].author.name : "Loading...";
     const navigate = useNavigate();
 
     useEffect(() => {
