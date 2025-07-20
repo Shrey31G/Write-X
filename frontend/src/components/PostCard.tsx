@@ -63,7 +63,7 @@ export const PostCard = ({ authorName, title, content, publishedDate, id, onDele
             } else if (err.response?.status === 403) {
                 console.log('You are not authorized to delete this post');
             } else {
-                console.log('Failed to delete post. Please try again.');
+                alert('Failed to delete post. Please try again.');
             }
         } finally {
             setIsDeleting(false);

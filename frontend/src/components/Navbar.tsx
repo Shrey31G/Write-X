@@ -1,3 +1,4 @@
+// Updated Navbar with improved gradient
 import { useState, useEffect, useRef } from "react";
 import { Link } from "react-router-dom";
 
@@ -41,7 +42,7 @@ export const Navbar = () => {
             to={"/"}
             className="flex items-center gap-2 text-white/90 hover:text-white transition-all duration-300 px-4 py-2 rounded-full font-bold text-2xl"
           >
-            <span className="bg-gradient-to-r from-indigo-400 to-purple-500 bg-clip-text text-transparent">
+            <span className="bg-gradient-to-r from-sky-400 via-teal-300 to-indigo-500 bg-clip-text text-transparent">
               WriteX
             </span>
           </Link>
