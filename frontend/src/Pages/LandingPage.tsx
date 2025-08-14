@@ -1,130 +1,158 @@
-import { useState, useEffect } from 'react';
-import { motion } from 'framer-motion';
-import { useNavigate } from 'react-router-dom';
+import { motion, useScroll, useSpring, useTransform } from "framer-motion";
+import { useNavigate } from "react-router-dom";
 
 export const LandingPage = () => {
-  const [animate, setAnimate] = useState(false);
   const navigate = useNavigate();
+  const { scrollY } = useScroll();
 
-  useEffect(() => {
-    setAnimate(true);
-  }, []);
+  const navbarMaxWidth = useTransform(scrollY, [0, 300], [1152, 750]);
+  const navbarPaddingX = useTransform(scrollY, [0, 300], [12, 32]);
+  const navbarMarginTop = useTransform(scrollY, [0, 300], [0, 16]);
+
+  const navbarBackground = useTransform(
+    scrollY,
+    [0, 100],
+    ["rgba(23, 23, 23, 0)", "rgba(23, 23, 23, 0.9)"],
+  );
 
   return (
-    <div className="h-screen w-full bg-black flex items-center justify-center overflow-hidden relative">
-    
-      <div className="z-10 text-center px-4 w-full">
-        <div className="flex items-center justify-center space-x-4 sm:space-x-8 mb-6">
-          <motion.div
-            initial={{ 
-              x: '-200%', 
-              scale: 0,
-              rotate: -180,
-              opacity: 0
-            }}
-            animate={animate ? { 
-              x: 0, 
-              scale: 1,
-              rotate: 0,
-              opacity: 1,
-              transition: { 
-                type: "spring", 
-                stiffness: 150, 
-                damping: 10,
-                duration: 0.5
-              }
-            } : {}}
-            className="text-white text-6xl sm:text-8xl lg:text-9xl font-black tracking-tighter transform-gpu"
-          >
-            Write
-          </motion.div>
-
-          <motion.div
-            initial={{ 
-              x: '200%', 
-              scale: 0,
-              rotate: 180,
-              opacity: 0
-            }}
-            animate={animate ? { 
-              x: 0, 
-              scale: 1,
-              rotate: 0,
-              opacity: 1,
-              transition: { 
-                type: "spring", 
-                stiffness: 150, 
-                damping: 10,
-                duration: 0.5
-              }
-            } : {}}
-            className="text-white text-6xl sm:text-8xl lg:text-9xl font-black tracking-tighter transform-gpu"
-          >
-            X
-          </motion.div>
-        </div>
-
-        {/* Subtitle */}
-        <motion.p
-          initial={{ opacity: 0, y: 50 }}
-          animate={{ 
-            opacity: 1, 
-            y: 0,
-            transition: {
-              delay: 0.6,
-              duration: 0.5
-            }
-          }}
-          className="text-lg sm:text-xl md:text-2xl text-gray-300 mb-8 max-w-2xl mx-auto px-4"
-        >
-          A New Way to Write Stories: Unleash Your Creativity, Share Your Imagination
-        </motion.p>
-
-        {/* Auth Buttons */}
+    <div className="bg-neutral-900 text-white">
+      <motion.div className="fixed top-0 z-50 w-full transition-all duration-200">
         <motion.div
-          initial={{ opacity: 0, y: 50 }}
-          animate={{ 
-            opacity: 1, 
-            y: 0,
-            transition: {
-              delay: 0.8,
-              duration: 0.5
-            }
+          className="sticky top-0 z-50 mx-auto flex w-full items-center justify-between rounded-3xl py-3 backdrop-blur-sm transition-all duration-300"
+          style={{
+            maxWidth: navbarMaxWidth,
+            paddingLeft: navbarPaddingX,
+            paddingRight: navbarPaddingX,
+            backgroundColor: navbarBackground,
+            marginTop: navbarMarginTop,
           }}
-          className="flex justify-center space-x-4 sm:space-x-6 px-4"
         >
-          <button 
-            onClick={() => navigate('/signin')}
-            className="px-6 py-2 sm:px-8 sm:py-3 bg-white/10 text-white hover:bg-white/20 rounded-full transition-all duration-300 border border-white/20 hover:border-white/40 text-sm sm:text-base"
-          >
-            Sign In
-          </button>
-          <button 
-            onClick={() => navigate('/signup')}
-            className="px-6 py-2 sm:px-8 sm:py-3 bg-blue-600 text-white hover:bg-blue-700 rounded-full transition-all duration-300 shadow-lg hover:shadow-xl text-sm sm:text-base"
-          >
-            Sign Up
-          </button>
+          <div>
+            <button className="text-lg font-semibold">Write X</button>
+          </div>
+
+          <div className="flex gap-8">
+            <button
+              onClick={() => navigate("/signin")}
+              className="rounded-xl border border-white px-6 py-2 font-semibold transition-colors duration-300 hover:bg-white hover:text-black"
+            >
+              Get Started
+            </button>
+            <button className="font-semibold">Light</button>
+          </div>
         </motion.div>
-      </div>
+      </motion.div>
 
-      {/* Collision Spark */}
-      {animate && (
-        <motion.div
-          initial={{ scale: 0, opacity: 0 }}
-          animate={{ 
-            scale: 5,
-            opacity: 0.6,
-            rotate: 360
-          }}
-          transition={{
-            duration: 0.6,
-            delay: 0.4,
-            ease: "easeOut"
-          }}
-          className="absolute w-32 h-32 bg-white/50 rounded-full blur-3xl"
-        />
-      )}
+      <div className="mx-auto flex h-[75vh] max-w-7xl flex-col p-5">
+        <div className="mx-auto mt-[22vh] flex h-[33%] w-full max-w-6xl">
+          <div className="w-full max-w-2xl">
+            <div className="relative flex w-full max-w-2xl font-inria text-7xl font-semibold">
+              <div className="absolute right-0 -translate-y-2 translate-x-5">
+                <svg
+                  width="384"
+                  height="226"
+                  viewBox="-4 -4 392 234"
+                  fill="none"
+                  xmlns="http://www.w3.org/2000/svg"
+                  className="relative"
+                >
+                  <path
+                    id="dotPath"
+                    d="M0.5 0.5H163.5V74H309V146H383.5V225.5"
+                    stroke="transparent"
+                    strokeWidth="1"
+                    fill="none"
+                  />
+                  <motion.circle r="1.5" fill="white">
+                    <animateMotion
+                      dur="6s"
+                      repeatCount="indefinite"
+                      path="M0.5 0.5H163.5V76.5H309V146H383.5V225.5"
+                    />
+                  </motion.circle>
+                </svg>
+              </div>
+              <p className="w-full">
+                <span className="block">Turn Your</span>
+                <span className="block">Thoughts into</span>
+                Timeless Words
+              </p>
+            </div>
+            <div className="mt-10 max-w-lg pl-2">
+              <p>
+                An intelligent writing workspace designed to help you write
+                better, faster, and without distractions.
+              </p>
+            </div>
+          </div>
+          <div className="mb-10 flex w-full items-center justify-center text-9xl font-bold">
+            X
+          </div>
+        </div>
+      </div>
+      <div className="h-screen bg-white"></div>
+      <footer className="mx-auto max-w-6xl px-6 py-8 text-sm text-gray-300">
+        <div className="flex flex-col md:flex-row md:items-center md:justify-between">
+          <div className="flex items-center gap-3">
+            <div className="bg-white/8 rounded-full p-2 font-bold text-white">
+              <span className="text-xl">X</span>
+            </div>
+            <div>
+              <div className="font-medium text-white">WriteX</div>
+              <div className="text-xs text-gray-400">
+                Turn thoughts into timeless words
+              </div>
+            </div>
+          </div>
+          <div className="flex flex-wrap items-center gap-4">
+            <a href="/about" className="hover:text-white">
+              About
+            </a>
+            <a href="/docs" className="hover:text-white">
+              Docs
+            </a>
+            <a href="/pricing" className="hover:text-white">
+              Pricing
+            </a>
+            <a href="/blog" className="hover:text-white">
+              Blog
+            </a>
+          </div>
+          <div className="flex items-center gap-3">
+            <a
+              aria-label="Email"
+              href="mailto:shreygangwar.it@email.com"
+              className="hover:text-white"
+            >
+              Email
+            </a>
+            <a
+              aria-label="GitHub"
+              href="https://github.com/Shrey31G"
+              className="hover:text-white"
+            >
+              Github
+            </a>
+            <a
+              aria-label="LinkedIn"
+              href="https://www.linkedin.com/in/shrey-gangwar-712233225/"
+              className="hover:text-white"
+            >
+              Linkedin
+            </a>
+          </div>
+        </div>
+        <div className="border-white/6 mt-6 border-t pt-4 text-xs text-gray-500">
+          © {new Date().getFullYear()} WriteX — Built with ❤️ ·
+          <a href="/terms" className="ml-2 hover:text-white">
+            Terms
+          </a>
+          <a href="/privacy" className="ml-2 hover:text-white">
+            Privacy
+          </a>
+        </div>
+      </footer>
     </div>
   );
 };
