@@ -57,7 +57,7 @@ export const LandingPage = () => {
         <div className="mx-auto mt-[22vh] flex h-[33%] w-full max-w-6xl">
           <div className="w-full max-w-2xl">
             <div className="relative flex w-full max-w-2xl font-inria text-7xl font-semibold">
-              <div className="absolute right-0 -translate-y-2 translate-x-5">
+              <div className="absolute left-40 -translate-y-2 translate-x-5">
                 <svg
                   width="384"
                   height="226"
