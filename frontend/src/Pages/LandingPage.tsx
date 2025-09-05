@@ -356,13 +356,23 @@ export const LandingPage = () => {
             WriteX. Start connecting through meaningful text-based conversations
             today.
           </p>
-          <button
+          <motion.button
+            whileHover={{
+              y: -4,
+              scale: 1.05,
+              transition: {
+                duration: 0.3,
+              },
+            }}
+            whileTap={{
+              scale: 1,
+            }}
             onClick={() => navigate("/signin")}
-            className="mx-auto flex items-center justify-center rounded-md bg-indigo-600 px-8 py-3 text-lg transition-colors hover:bg-indigo-700"
+            className="mx-auto flex items-center justify-center rounded-xl bg-indigo-700 px-8 py-3 text-lg text-neutral-300 transition-colors hover:bg-indigo-600 hover:text-white"
           >
             Start Writing
             <ArrowRight className="ml-2 h-5 w-5" />
-          </button>
+          </motion.button>
         </div>
       </section>
       <footer className="mx-auto max-w-6xl px-6 py-8 text-sm text-gray-300">
