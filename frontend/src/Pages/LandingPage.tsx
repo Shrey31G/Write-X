@@ -26,7 +26,7 @@ export const LandingPage = () => {
   );
 
   return (
-    <div className="bg-neutral-900 text-white">
+    <div className="w-full max-w-full overflow-x-hidden bg-neutral-900 text-white">
       <motion.div className="fixed top-0 z-50 w-full transition-all duration-200">
         <motion.div
           className="sticky top-0 z-50 mx-auto flex w-full items-center justify-between rounded-3xl py-3 backdrop-blur-sm transition-all duration-300"
@@ -42,7 +42,7 @@ export const LandingPage = () => {
             <button className="text-lg font-semibold">Write X</button>
           </div>
 
-          <div className="flex gap-8">
+          <div className="flex">
             <button
               onClick={() => navigate("/signin")}
               className="rounded-xl border border-white px-6 py-2 font-semibold transition-colors duration-300 hover:bg-white hover:text-black"
@@ -53,11 +53,11 @@ export const LandingPage = () => {
         </motion.div>
       </motion.div>
 
-      <div className="mx-auto flex h-[75vh] max-w-7xl flex-col p-5">
-        <div className="mx-auto mt-[22vh] flex h-[33%] w-full max-w-6xl">
-          <div className="w-full max-w-2xl">
-            <div className="relative flex w-full max-w-2xl font-inria text-7xl font-semibold">
-              <div className="absolute left-40 -translate-y-2 translate-x-5">
+      <div className="mx-auto flex min-h-[60vh] w-full flex-col p-4 md:h-[75vh] md:max-w-7xl md:p-5">
+        <div className="mx-auto mt-16 flex w-full max-w-6xl flex-col px-4 md:mt-[22vh] lg:h-[33%] lg:flex-row">
+          <div className="w-full lg:max-w-2xl">
+            <div className="relative flex w-full max-w-2xl font-inria text-4xl font-semibold md:text-6xl lg:text-7xl">
+              <div className="absolute left-20 hidden -translate-y-2 translate-x-5 sm:block md:ml-4 md:-translate-y-4 lg:left-36 lg:-translate-y-0 xl:left-40">
                 <svg
                   width="384"
                   height="226"
@@ -95,9 +95,9 @@ export const LandingPage = () => {
               </p>
             </div>
           </div>
-          <div className="pointer-events-none ml-40 flex items-center justify-center">
+          <div className="pointer-events-none mt-8 flex items-center justify-center lg:ml-24 xl:ml-40">
             <motion.div
-              className="relative"
+              className="relative hidden lg:flex"
               initial={{ opacity: 0, scale: 0.5 }}
               animate={{ opacity: 1, scale: 1 }}
               transition={{ duration: 1, ease: "easeOut" }}
@@ -116,7 +116,7 @@ export const LandingPage = () => {
               />
 
               <motion.div
-                className="relative bg-clip-text text-[200px] font-bold text-transparent text-white"
+                className="relative bg-clip-text text-6xl font-bold text-transparent text-white md:text-[150px] lg:text-[200px]"
                 animate={{
                   rotateY: [0, 360],
                 }}
@@ -170,11 +170,11 @@ export const LandingPage = () => {
         </div>
       </div>
 
-      <div className="h-screen bg-white">
-        <section id="features" className="bg-neutral-100 px-4 py-[70px]">
+      <div className="h-full bg-white">
+        <section className="bg-neutral-100 px-4 py-16 md:px-8 md:py-20">
           <div className="container mx-auto">
             <div className="mb-16 text-center">
-              <h2 className="mb-4 text-3xl font-bold text-neutral-800 md:text-4xl">
+              <h2 className="mb-4 text-2xl font-bold text-neutral-800 md:text-3xl lg:text-4xl">
                 Everything you need to connect and share
               </h2>
               <p className="mx-auto max-w-2xl text-xl text-neutral-800">
