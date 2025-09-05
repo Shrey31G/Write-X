@@ -1,5 +1,15 @@
 import { motion, useScroll, useTransform } from "framer-motion";
 import { useNavigate } from "react-router-dom";
+import {
+  ArrowRight,
+  MessageSquare,
+  Heart,
+  Share2,
+  Edit3,
+  Users,
+  TrendingUp,
+  Zap,
+} from "lucide-react";
 
 export const LandingPage = () => {
   const navigate = useNavigate();
@@ -39,7 +49,6 @@ export const LandingPage = () => {
             >
               Get Started
             </button>
-            <button className="font-semibold">Light</button>
           </div>
         </motion.div>
       </motion.div>
@@ -86,12 +95,276 @@ export const LandingPage = () => {
               </p>
             </div>
           </div>
-          <div className="mb-10 flex w-full items-center justify-center text-9xl font-bold">
-            X
+          <div className="pointer-events-none ml-40 flex items-center justify-center">
+            <motion.div
+              className="relative"
+              initial={{ opacity: 0, scale: 0.5 }}
+              animate={{ opacity: 1, scale: 1 }}
+              transition={{ duration: 1, ease: "easeOut" }}
+            >
+              <motion.div
+                className="absolute inset-0 rounded-full bg-gradient-to-r from-blue-500/20 via-purple-500/20 to-pink-500/20 blur-3xl"
+                animate={{
+                  scale: [1, 1.2, 1],
+                  opacity: [0.3, 0.6, 0.3],
+                }}
+                transition={{
+                  duration: 3,
+                  repeat: Number.POSITIVE_INFINITY,
+                  ease: "easeInOut",
+                }}
+              />
+
+              <motion.div
+                className="relative bg-clip-text text-[200px] font-bold text-transparent text-white"
+                animate={{
+                  rotateY: [0, 360],
+                }}
+                transition={{
+                  duration: 8,
+                  repeat: Number.POSITIVE_INFINITY,
+                  ease: "linear",
+                }}
+                whileHover={{
+                  scale: 1.1,
+                  rotateZ: 15,
+                  transition: { duration: 0.3 },
+                }}
+              >
+                X
+              </motion.div>
+
+              <motion.div
+                className="absolute inset-0 rounded-full border-2 border-blue-500/30"
+                style={{
+                  width: "120%",
+                  height: "120%",
+                  top: "-10%",
+                  left: "-10%",
+                }}
+                animate={{ rotate: 360 }}
+                transition={{
+                  duration: 10,
+                  repeat: Number.POSITIVE_INFINITY,
+                  ease: "linear",
+                }}
+              />
+
+              <motion.div
+                className="absolute inset-0 rounded-full border border-purple-500/20"
+                style={{
+                  width: "140%",
+                  height: "140%",
+                  top: "-20%",
+                  left: "-20%",
+                }}
+                animate={{ rotate: -360 }}
+                transition={{
+                  duration: 15,
+                  repeat: Number.POSITIVE_INFINITY,
+                  ease: "linear",
+                }}
+              />
+            </motion.div>
           </div>
         </div>
       </div>
-      <div className="h-screen bg-white"></div>
+
+      <div className="h-screen bg-white">
+        <section id="features" className="bg-neutral-100 px-4 py-[70px]">
+          <div className="container mx-auto">
+            <div className="mb-16 text-center">
+              <h2 className="mb-4 text-3xl font-bold text-neutral-800 md:text-4xl">
+                Everything you need to connect and share
+              </h2>
+              <p className="mx-auto max-w-2xl text-xl text-neutral-800">
+                WriteX focuses on meaningful text-based conversations without
+                the noise of images or videos.
+              </p>
+            </div>
+
+            <div className="grid gap-8 md:grid-cols-2 lg:grid-cols-3">
+              <motion.div
+                whileHover={{
+                  scale: 1.05,
+                  y: -8,
+                  transition: {
+                    duration: 0.4,
+                  },
+                }}
+                whileTap={{
+                  scale: 1,
+                  transition: {
+                    duration: 0.3,
+                  },
+                }}
+                className="cursor-pointer rounded-lg border border-slate-800 bg-black p-6"
+              >
+                <div className="mb-4 flex h-12 w-12 items-center justify-center rounded-lg bg-indigo-600/10">
+                  <Edit3 className="h-6 w-6 text-indigo-400" />
+                </div>
+                <h3 className="mb-2 text-xl font-semibold">Write & Share</h3>
+                <p className="text-slate-400">
+                  Express yourself with powerful text formatting and share your
+                  thoughts with the community instantly.
+                </p>
+              </motion.div>
+
+              <motion.div
+                whileHover={{
+                  scale: 1.05,
+                  y: -8,
+                  transition: {
+                    duration: 0.4,
+                  },
+                }}
+                whileTap={{
+                  scale: 1,
+                  transition: {
+                    duration: 0.3,
+                  },
+                }}
+                className="cursor-pointer rounded-lg border border-slate-800 bg-black p-6"
+              >
+                <div className="mb-4 flex h-12 w-12 items-center justify-center rounded-lg bg-indigo-600/10">
+                  <MessageSquare className="h-6 w-6 text-indigo-400" />
+                </div>
+                <h3 className="mb-2 text-xl font-semibold">Engage & Discuss</h3>
+                <p className="text-slate-400">
+                  Join conversations, reply to posts, and build meaningful
+                  connections through thoughtful discussions.
+                </p>
+              </motion.div>
+
+              <motion.div
+                whileHover={{
+                  scale: 1.05,
+                  y: -8,
+                  transition: {
+                    duration: 0.4,
+                  },
+                }}
+                whileTap={{
+                  scale: 1,
+                  transition: {
+                    duration: 0.3,
+                  },
+                }}
+                className="cursor-pointer rounded-lg border border-slate-800 bg-black p-6"
+              >
+                <div className="mb-4 flex h-12 w-12 items-center justify-center rounded-lg bg-indigo-600/10">
+                  <Heart className="h-6 w-6 text-indigo-400" />
+                </div>
+                <h3 className="mb-2 text-xl font-semibold">Like & Support</h3>
+                <p className="text-slate-400">
+                  Show appreciation for great content and discover what the
+                  community loves most.
+                </p>
+              </motion.div>
+
+              <motion.div
+                whileHover={{
+                  scale: 1.05,
+                  y: -8,
+                  transition: {
+                    duration: 0.4,
+                  },
+                }}
+                whileTap={{
+                  scale: 1,
+                  transition: {
+                    duration: 0.3,
+                  },
+                }}
+                className="cursor-pointer rounded-lg border border-slate-800 bg-black p-6"
+              >
+                <div className="mb-4 flex h-12 w-12 items-center justify-center rounded-lg bg-indigo-600/10">
+                  <Share2 className="h-6 w-6 text-indigo-400" />
+                </div>
+                <h3 className="mb-2 text-xl font-semibold">Share & Amplify</h3>
+                <p className="text-slate-400">
+                  Spread great ideas by sharing posts with your followers and
+                  expanding the conversation.
+                </p>
+              </motion.div>
+
+              <motion.div
+                whileHover={{
+                  scale: 1.05,
+                  y: -8,
+                  transition: {
+                    duration: 0.4,
+                  },
+                }}
+                whileTap={{
+                  scale: 1,
+                  transition: {
+                    duration: 0.3,
+                  },
+                }}
+                className="cursor-pointer rounded-lg border border-slate-800 bg-black p-6"
+              >
+                <div className="mb-4 flex h-12 w-12 items-center justify-center rounded-lg bg-indigo-600/10">
+                  <Users className="h-6 w-6 text-indigo-400" />
+                </div>
+                <h3 className="mb-2 text-xl font-semibold">Follow & Connect</h3>
+                <p className="text-slate-400">
+                  Build your network by following interesting people and staying
+                  updated with their latest thoughts.
+                </p>
+              </motion.div>
+
+              <motion.div
+                whileHover={{
+                  scale: 1.05,
+                  y: -8,
+                  transition: {
+                    duration: 0.4,
+                  },
+                }}
+                whileTap={{
+                  scale: 1,
+                  transition: {
+                    duration: 0.3,
+                  },
+                }}
+                className="cursor-pointer rounded-lg border border-slate-800 bg-black p-6"
+              >
+                <div className="mb-4 flex h-12 w-12 items-center justify-center rounded-lg bg-indigo-600/10">
+                  <TrendingUp className="h-6 w-6 text-indigo-400" />
+                </div>
+                <h3 className="mb-2 text-xl font-semibold">Discover Trends</h3>
+                <p className="text-slate-400">
+                  Stay current with trending topics and discover what's
+                  capturing the community's attention.
+                </p>
+              </motion.div>
+            </div>
+          </div>
+        </section>
+      </div>
+      <section className="bg-neutral-900 px-4 py-20 text-white">
+        <div className="container mx-auto max-w-3xl text-center">
+          <div className="mx-auto mb-6 flex h-16 w-16 items-center justify-center rounded-full bg-indigo-600/10">
+            <Zap className="h-8 w-8 text-indigo-400" />
+          </div>
+          <h2 className="mb-6 text-3xl font-bold md:text-4xl">
+            Ready to join the conversation?
+          </h2>
+          <p className="mb-8 text-xl text-slate-400">
+            Join thousands of writers and thinkers who share their ideas on
+            WriteX. Start connecting through meaningful text-based conversations
+            today.
+          </p>
+          <button
+            onClick={() => navigate("/signin")}
+            className="mx-auto flex items-center justify-center rounded-md bg-indigo-600 px-8 py-3 text-lg transition-colors hover:bg-indigo-700"
+          >
+            Start Writing
+            <ArrowRight className="ml-2 h-5 w-5" />
+          </button>
+        </div>
+      </section>
       <footer className="mx-auto max-w-6xl px-6 py-8 text-sm text-gray-300">
         <div className="flex flex-col md:flex-row md:items-center md:justify-between">
           <div className="flex items-center gap-3">
@@ -106,16 +379,28 @@ export const LandingPage = () => {
             </div>
           </div>
           <div className="flex flex-wrap items-center gap-4">
-            <a href="/about" className="hover:text-white">
+            <a
+              href="/about"
+              className="transition-all duration-300 hover:text-white"
+            >
               About
             </a>
-            <a href="/docs" className="hover:text-white">
+            <a
+              href="/docs"
+              className="transition-all duration-300 hover:text-white"
+            >
               Docs
             </a>
-            <a href="/pricing" className="hover:text-white">
+            <a
+              href="/pricing"
+              className="transition-all duration-300 hover:text-white"
+            >
               Pricing
             </a>
-            <a href="/blog" className="hover:text-white">
+            <a
+              href="/blog"
+              className="transition-all duration-300 hover:text-white"
+            >
               Blog
             </a>
           </div>
@@ -123,21 +408,21 @@ export const LandingPage = () => {
             <a
               aria-label="Email"
               href="mailto:shreygangwar.it@email.com"
-              className="hover:text-white"
+              className="transition-all duration-300 hover:text-white"
             >
               Email
             </a>
             <a
               aria-label="GitHub"
               href="https://github.com/Shrey31G"
-              className="hover:text-white"
+              className="transition-all duration-300 hover:text-white"
             >
               Github
             </a>
             <a
               aria-label="LinkedIn"
               href="https://www.linkedin.com/in/shrey-gangwar-712233225/"
-              className="hover:text-white"
+              className="transition-all duration-300 hover:text-white"
             >
               Linkedin
             </a>
